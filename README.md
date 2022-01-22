@@ -56,7 +56,7 @@ Clone project trên  , "npm i" để cài đặt  node_modules, "npm start" đ�
   kết quả cập nhật 
   ![edit-result](https://user-images.githubusercontent.com/72057059/150641110-d1a37afe-9d26-4973-9555-15f42c296a95.PNG)
   
-  - Login 
+  - Login (không có trong yêu cầu)
   ![login](https://user-images.githubusercontent.com/72057059/150641147-505208e0-ed68-4745-a58e-c4bba2ee9ab2.PNG)
   
   đăng nhập thành công sẽ  tạo cookie chuyển đến trang index (user: admin, password: abc@123)
