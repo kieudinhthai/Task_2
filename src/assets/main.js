@@ -1,3 +1,5 @@
+
+
 let arr = []
 
 const getAll = async () => {
@@ -44,6 +46,7 @@ const search = async () => {
         <td><input type="text" name="" value="${doc.birthday}" id="${doc._id}birthday" style="border: none" class="form-control " onchange="getBirthday('${doc._id}')"></td> 
        </tr>`)
       })
+      $('#search_bar').val("")
       alert(data.data.message)
 
     } catch (error) {
@@ -65,10 +68,11 @@ const getEmail = (id) => {
 const getBirthday = (id) => {
   let birthday = $(`#${id}birthday`).val()
   arr.push({ _id: id, birthday: birthday })
+  console.log(arr)
 }
 
 
-const updateMultipleRecord = (data) => {
+const updateMultipleRecord =  (data) => {
   if (arr.length < 1) {
     alert('No changes were made')
   } else {
@@ -76,14 +80,54 @@ const updateMultipleRecord = (data) => {
       const result = axios({
         method: 'POST',
         url: '/api/multi-add',
-        data: arr
+        data: arr,
+        headers: {contentType: 'application/json'}
       })
       $('#data_users').empty()
       alert("Update Successful")
+      arr.length =0
       getAll()
 
     } catch (error) {
       alert("Update failed")
     }
   }
+}
+
+
+// Login-----------------------------------------
+
+const authLogin = async   () => {
+  if (!$('#user-login').val() || !$('#password').val()) {
+    alert("Please enter your user name and password")
+  }
+  else {
+    const data = {
+      user: $('#user-login').val(),
+      password: $('#password').val(),
+    }
+    console.log(data)
+
+    try {
+      const result = await  axios({
+        method: 'POST',
+        url: '/api/login',
+        data: data
+      })
+      setCookie("token", result.data.token, 1)
+      $(location).attr('href', '/')
+
+   //   console.log(result)
+    } catch (error) {
+      console.log(error)
+      alert('Login failed')
+   }
+  }
+}
+
+function setCookie(cname, cvalue, exdays) {
+  const d = new Date();
+  d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+  let expires = "expires=" + d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }

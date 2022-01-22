@@ -4,9 +4,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
-var userRouter = require('./src/routers/users.router');
+var userRouter = require('./src/routers/api.router');
 var indexRouter = require('./src/routers/index.router');
-
+var accountRouter = require('./src/routers/account.router');
 var app = express();
 
 // view engine setup
@@ -20,6 +20,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'src/assets')));
 
+app.use('/login', accountRouter);
 app.use('/api', userRouter);
 app.use('/', indexRouter);
 
@@ -44,7 +45,7 @@ app.use(function(err, req, res, next) {
 
 async function connect() {
   try {
-     await mongoose.connect('mongodb://localhost:27017/Task_2', {
+     await mongoose.connect('mongodb+srv://myCoffeeDB:abc%40123@piccolocoffeecluster.dvdub.mongodb.net/Task_2?retryWrites=true&w=majority', {
       useNewUrlParser: true,
       useUnifiedTopology: true
      });
